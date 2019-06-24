@@ -10,11 +10,12 @@ import org.dice_research.opal.exceptions.ResourceException;
 
 public class Main {
 
-	public final static String FILE_MCLOUD = "mcloud.n3";
-	public final static String FILE_GOVDATA = "govdata.n3";
+	public final static String FILE_MCLOUD = "mcloud.ttl";
+	public final static String FILE_GOVDATA = "govdata.ttl";
+	public final static String LANGUAGE = "TTL";
 
-	public final static boolean CREATE_SUBGRAPH_MCLOUD = false;
-	public final static boolean CREATE_SUBGRAPH_GOVDATA = false;
+	public final static boolean CREATE_SUBGRAPH_MCLOUD = true;
+	public final static boolean CREATE_SUBGRAPH_GOVDATA = true;
 
 	public final static boolean GET_URIS_MCLOUD = true;
 	public final static boolean GET_URIS_GOVDATA = true;
@@ -58,7 +59,7 @@ public class Main {
 			throws ConfigurationException, ResourceException, IOException {
 		Model model = subgraph.createModel();
 		FileOutputStream fop = new FileOutputStream(file);
-		model.write(fop, "N3");
+		model.write(fop, LANGUAGE);
 		fop.close();
 	}
 

@@ -1,5 +1,7 @@
 govdata.n3
 mcloud.n3
+govdata.ttl
+mcloud.ttl
 
 ### https://github.com/github/gitignore/blob/master/Java.gitignore
 
