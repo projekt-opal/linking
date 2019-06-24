@@ -1,0 +1,9 @@
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+SELECT ?dataset
+WHERE { 
+  GRAPH <http://projekt-opal.de> {
+    ?catalog dcat:dataset ?dataset .
+  }
+}
