@@ -7,8 +7,12 @@ import java.io.IOException;
 import org.apache.jena.rdf.model.Model;
 import org.dice_research.opal.exceptions.ConfigurationException;
 import org.dice_research.opal.exceptions.ResourceException;
+import org.dice_research.opal.linking.extraction.Extraction;
 
 public class Main {
+
+	public final static String MODE_GENERATE = "generate";
+	public final static String MODE_EXTRACT = "extract";
 
 	public final static String FILE_MCLOUD = "mcloud.ttl";
 	public final static String FILE_GOVDATA = "govdata.ttl";
@@ -22,36 +26,49 @@ public class Main {
 
 	public static void main(String[] args) throws ConfigurationException, ResourceException, IOException {
 
-		Main main = new Main();
-		File file;
-		Subgraph subgraph;
+		if (args.length == 1 && args[0].equals(MODE_GENERATE)) {
 
-		// mCLOUD
+			Main main = new Main();
+			File file;
+			Subgraph subgraph;
 
-		subgraph = new Mcloud();
-		subgraph.setEndpoint(Configuration.OPAL_ENDPOINT);
+			// mCLOUD
 
-		if (CREATE_SUBGRAPH_MCLOUD) {
-			file = new File(FILE_MCLOUD);
-			main.createMcloudSubgraph(subgraph, file);
+			subgraph = new Mcloud();
+			subgraph.setEndpoint(Configuration.OPAL_ENDPOINT);
+
+			if (CREATE_SUBGRAPH_MCLOUD) {
+				file = new File(FILE_MCLOUD);
+				main.createMcloudSubgraph(subgraph, file);
+			}
+
+			if (GET_URIS_MCLOUD) {
+				System.out.println(subgraph.getDatasetUris().size());
+			}
+
+			// Govdata
+
+			subgraph = new Govdata();
+			subgraph.setEndpoint(Configuration.OPAL_ENDPOINT);
+
+			if (CREATE_SUBGRAPH_GOVDATA) {
+				file = new File(FILE_GOVDATA);
+				main.createMcloudSubgraph(subgraph, file);
+			}
+
+			if (GET_URIS_GOVDATA) {
+				System.out.println(subgraph.getDatasetUris().size());
+			}
 		}
 
-		if (GET_URIS_MCLOUD) {
-			System.out.println(subgraph.getDatasetUris().size());
+		else if (args.length == 2 && args[0].equals(MODE_EXTRACT)) {
+			new Extraction().extract(new File(args[1]));
 		}
 
-		// Govdata
-
-		subgraph = new Govdata();
-		subgraph.setEndpoint(Configuration.OPAL_ENDPOINT);
-
-		if (CREATE_SUBGRAPH_GOVDATA) {
-			file = new File(FILE_GOVDATA);
-			main.createMcloudSubgraph(subgraph, file);
-		}
-
-		if (GET_URIS_GOVDATA) {
-			System.out.println(subgraph.getDatasetUris().size());
+		else {
+			System.err.println("Please provide the required argument(s):");
+			System.err.println("  " + MODE_GENERATE + "           to generate TTL files");
+			System.err.println("  " + MODE_EXTRACT + " {file.nt}  to extract results");
 		}
 	}
 
