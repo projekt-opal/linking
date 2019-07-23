@@ -13,9 +13,7 @@ import org.dice_research.opal.exceptions.ResourceException;
 
 public abstract class Subgraph extends Endpoint {
 
-	// TODO
 	public static final String RESOURCE_SPARQL_SUBGRAPH = "sparql-subgraph.txt";
-
 	public static final String RESOURCE_SPARQL_DATASET_URIS = "sparql-dataset-uris.txt";
 
 	abstract protected String getCatalogUri();
@@ -28,6 +26,9 @@ public abstract class Subgraph extends Endpoint {
 		return queryExecution.execConstruct();
 	}
 
+	/**
+	 * Returns all Dataset URIs of subgraph/catalog
+	 */
 	List<String> getDatasetUris() throws ResourceException, ConfigurationException {
 		String sparqlQuery = Resources.getResourceAsString(RESOURCE_SPARQL_DATASET_URIS);
 		sparqlQuery = sparqlQuery.replace("?catalog", "<" + getCatalogUri() + ">");
@@ -41,7 +42,6 @@ public abstract class Subgraph extends Endpoint {
 			uris.add(querySolution.get("dataset").asResource().getURI());
 		}
 		return uris;
-
 	}
 
 }

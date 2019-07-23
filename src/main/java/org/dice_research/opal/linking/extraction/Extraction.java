@@ -13,10 +13,10 @@ public class Extraction {
 	private List<String> urisS = new LinkedList<String>();
 	private List<String> urisT = new LinkedList<String>();
 
-	public void extract(File file) throws IOException {
+	public void extractUris(File limesResultsFile) throws IOException {
 
 		// Go through lines
-		for (String line : FileUtils.readLines(file, StandardCharsets.UTF_8)) {
+		for (String line : FileUtils.readLines(limesResultsFile, StandardCharsets.UTF_8)) {
 
 			// Split line b tab
 			String[] parts = line.split("\t");
@@ -25,12 +25,15 @@ public class Extraction {
 			urisS.add(parts[0].substring(1, parts[0].length() - 1));
 			urisT.add(parts[1].substring(1, parts[1].length() - 1));
 		}
+	}
+
+	public void printResultExample() {
 
 		// TODO
 
 		System.out.println(urisS.size());
 		System.out.println(urisT.size());
-		
+
 		System.out.println(urisS.get(0));
 		System.out.println(urisT.get(0));
 	}
