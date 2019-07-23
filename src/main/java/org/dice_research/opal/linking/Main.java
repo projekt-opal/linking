@@ -2,7 +2,6 @@ package org.dice_research.opal.linking;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import org.apache.jena.rdf.model.Model;
 import org.dice_research.opal.linking.extraction.Extraction;
@@ -24,6 +23,8 @@ public class Main {
 	public final static boolean PRINT_DATASET_SIZE_MCLOUD = true;
 	public final static boolean PRINT_DATASET_SIZE_GOVDATA = true;
 
+	public final static boolean PRINT_EXPLORATION = false;
+
 	public static void main(String[] args) throws Exception {
 		if (args.length == 1 && args[0].equals(MODE_EXTRACT_GRAPHS)) {
 			new Main().extractGraphs();
@@ -38,10 +39,14 @@ public class Main {
 		}
 	}
 
-	protected void extractResults() throws IOException {
+	protected void extractResults() throws Exception {
 		Extraction extraction = new Extraction();
 		extraction.extractUris(new File(Configuration.DATA_DIRECTORY, Configuration.FILE_LIMES));
-		extraction.printResultExample();
+		if (PRINT_EXPLORATION) {
+			// Dev code to explore data to extract afterwards
+			extraction.printExploration();
+		}
+		extraction.extractResults();
 	}
 
 	protected void extractGraphs() throws Exception {

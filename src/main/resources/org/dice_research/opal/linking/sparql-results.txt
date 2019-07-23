@@ -1,0 +1,21 @@
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+SELECT ?dataset
+WHERE { 
+  GRAPH <http://projekt-opal.de> {
+    ?catalog dcat:dataset ?dataset .
+  }
+}
+
+
+PREFIX e: <http://learningsparql.com/ns/expenses#> 
+
+SELECT ?description ?date ?amount
+WHERE
+{
+  ?meal e:description ?description ;
+        e:date ?date ;
+        e:amount ?amount . 
+  VALUES ?description { "lunch" "dinner" }
+}
